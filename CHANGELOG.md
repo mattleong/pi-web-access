@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.10.7] - 2026-05-02
+
 ### Added
 - Added `summaryModel` config for choosing the default curator summary draft model from `~/.pi/web-search.json`.
 
