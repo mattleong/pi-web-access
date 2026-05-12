@@ -1,7 +1,8 @@
-import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
-import { Box, Text, truncateToWidth } from "@mariozechner/pi-tui";
+import { defineTool, type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { Box, Text, truncateToWidth } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
-import { StringEnum, complete, getModel, type Model } from "@mariozechner/pi-ai";
+import { StringEnum, complete, getModel, type Model } from "@earendil-works/pi-ai";
+import { loadCodePreviewSettings, withCodePreviewShell } from "pi-code-previews";
 import { fetchAllContent, type ExtractedContent } from "./extract.js";
 import { clearCloneCache } from "./github-extract.js";
 import { search, type SearchProvider, type ResolvedSearchProvider } from "./gemini-search.js";
@@ -465,7 +466,8 @@ function handleSessionChange(ctx: ExtensionContext): void {
 	}
 }
 
-export default function (pi: ExtensionAPI) {
+export default async function (pi: ExtensionAPI) {
+	await loadCodePreviewSettings();
 	const initConfig = loadConfigForExtensionInit();
 	const curateKey = initConfig.shortcuts?.curate || DEFAULT_SHORTCUTS.curate;
 	const activityKey = initConfig.shortcuts?.activity || DEFAULT_SHORTCUTS.activity;
@@ -1085,7 +1087,7 @@ export default function (pi: ExtensionAPI) {
 		widgetVisible = false;
 	});
 
-	pi.registerTool({
+	pi.registerTool(withCodePreviewShell(defineTool({
 		name: "web_search",
 		label: "Web Search",
 		description:
@@ -1526,9 +1528,9 @@ export default function (pi: ExtensionAPI) {
 
 			return new Text(lines.join("\n"), 0, 0);
 		},
-	});
+	})));
 
-	pi.registerTool({
+	pi.registerTool(withCodePreviewShell(defineTool({
 		name: "code_search",
 		label: "Code Search",
 		description: "Search for code examples, documentation, and API references. Returns relevant code snippets and docs from GitHub, Stack Overflow, and official documentation. Use for any programming question — API usage, library examples, debugging help.",
@@ -1569,9 +1571,9 @@ export default function (pi: ExtensionAPI) {
 			const preview = textContent.length > 500 ? textContent.slice(0, 500) + "..." : textContent;
 			return new Text(summary + "\n" + theme.fg("dim", preview), 0, 0);
 		},
-	});
+	})));
 
-	pi.registerTool({
+	pi.registerTool(withCodePreviewShell(defineTool({
 		name: "fetch_content",
 		label: "Fetch Content",
 		description: "Fetch URL(s) and extract readable content as markdown. Supports YouTube video transcripts (with thumbnail), GitHub repository contents, and local video files (with frame thumbnail). Video frames can be extracted via timestamp/range or sampled across the entire video with frames alone. Falls back to Gemini for pages that block bots or fail Readability extraction. For YouTube and video files: ALWAYS pass the user's specific question via the prompt parameter — this directs the AI to focus on that aspect of the video, producing much better results than a generic extraction. Content is always stored and can be retrieved with get_search_content.",
@@ -1814,9 +1816,9 @@ export default function (pi: ExtensionAPI) {
 			const preview = textContent.length > 500 ? textContent.slice(0, 500) + "..." : textContent;
 			return new Text(statusLine + "\n" + theme.fg("dim", preview), 0, 0);
 		},
-	});
+	})));
 
-	pi.registerTool({
+	pi.registerTool(withCodePreviewShell(defineTool({
 		name: "get_search_content",
 		label: "Get Search Content",
 		description: "Retrieve full content from a previous web_search or fetch_content call.",
@@ -1972,7 +1974,7 @@ export default function (pi: ExtensionAPI) {
 			const preview = textContent.length > 500 ? textContent.slice(0, 500) + "..." : textContent;
 			return new Text(statusLine + "\n" + theme.fg("dim", preview), 0, 0);
 		},
-	});
+	})));
 
 	pi.registerCommand("websearch", {
 		description: "Open web search curator",

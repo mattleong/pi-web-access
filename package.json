@@ -27,9 +27,13 @@
   },
   "homepage": "https://github.com/nicobailon/pi-web-access#readme",
   "dependencies": {
+    "@earendil-works/pi-ai": "^0.74.0",
+    "@earendil-works/pi-coding-agent": "^0.74.0",
+    "@earendil-works/pi-tui": "^0.74.0",
     "@mozilla/readability": "^0.5.0",
     "linkedom": "^0.16.0",
     "p-limit": "^6.1.0",
+    "pi-code-previews": "^0.1.28",
     "turndown": "^7.2.0",
     "unpdf": "^1.6.2"
   },
