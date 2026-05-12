@@ -1,31 +1,31 @@
 {
   "name": "pi-web-access",
-  "version": "0.10.7",
+  "version": "0.10.8",
   "description": "Web search, URL fetching, GitHub repo cloning, PDF extraction, YouTube video understanding, and local video analysis for Pi coding agent",
-  "type": "module",
-  "scripts": {
-    "test": "node --test"
-  },
   "keywords": [
-    "pi-package",
+    "extension",
+    "fetch",
+    "perplexity",
     "pi",
     "pi-coding-agent",
-    "extension",
-    "web-search",
-    "perplexity",
-    "fetch",
-    "scraping"
+    "pi-package",
+    "scraping",
+    "web-search"
   ],
-  "author": "Nico Bailon",
+  "homepage": "https://github.com/nicobailon/pi-web-access#readme",
+  "bugs": {
+    "url": "https://github.com/nicobailon/pi-web-access/issues"
+  },
   "license": "MIT",
+  "author": "Nico Bailon",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nicobailon/pi-web-access.git"
   },
-  "bugs": {
-    "url": "https://github.com/nicobailon/pi-web-access/issues"
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
   },
-  "homepage": "https://github.com/nicobailon/pi-web-access#readme",
   "dependencies": {
     "@earendil-works/pi-ai": "^0.74.0",
     "@earendil-works/pi-coding-agent": "^0.74.0",
